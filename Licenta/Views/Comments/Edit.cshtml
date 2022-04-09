@@ -1,0 +1,21 @@
+﻿@model Licenta.Models.Comment
+
+
+
+<h2>Editare review</h2>
+<form method="post" action="/Comments/Edit/@Model.CommentId">
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    
+    <label>
+        Continut review
+    </label>
+    <br />
+    <div style="width:100%;">
+        <textarea class="form-control" name="Content" style="box-sizing: border-box; max-width: 100%; min-height: 150px; ">@Model.Content</textarea>
+    </div>
+
+    @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+    <br />
+    <button class="btn btn-success" type="submit"><i class="fa fa-edit"></i> Editeaza review</button>
+</form>
+
