@@ -1,0 +1,39 @@
+﻿@model Licenta.Models.Product
+
+
+<h2>Adaugare produs</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Products"))
+{
+
+    @Html.Label("ProductName", "Nume Produs")
+    <br />
+    @Html.TextBox("ProductName", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.ProductName, null, new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Ingredients", "Ingrediente produs")
+    <br />
+    @Html.TextArea("Ingredients", null, new { @class = "form-control" })
+    @Html.ValidationMessage("Ingredients", "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Price", "Adaugare pret")
+    <br />
+    @Html.TextBox("Price", null, new { @class = "form-control" })
+    @Html.ValidationMessage("Price", "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Photo", "Adaugare poza")
+    <br />
+    @Html.TextBox("Photo", null, new { @class = "form-control" })
+    @Html.ValidationMessage("Photo", "", new { @class = "text-danger" })
+    <br />
+    <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+        "Selectati categoria", new { @class = "form-control" })
+    <br />
+    @Html.ValidationMessage("CategoryId", "", new { @class = "text-danger" })
+
+    <button class="btn btn-sm btn-success" type="submit">Adauga produs</button>
+}

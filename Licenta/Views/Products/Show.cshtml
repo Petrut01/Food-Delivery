@@ -1,0 +1,119 @@
+﻿@model Licenta.Models.Product
+<br />
+<a class="btn btn-info" href="/Products/Index"><i class="fa fa-arrow-left"></i>  Inapoi la lista de produse</a>
+<br />
+<br />
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4 class="text-center text-primary">@Model.ProductName</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <img class="img-responsive" src="@Model.Photo" alt="poza produsului" />
+                <br />
+                
+            </div>
+            <div class="col-md-8">
+                <strong>Ingrediente produs</strong>
+                <br />
+                <p style="overflow:auto;">@Model.Ingredients</p>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-5">
+                @if (ViewBag.esteAdmin)
+                {
+                    <a class="btn btn-warning" href="/Products/Edit/@Model.ProductId"><i class="fa fa-edit"></i> Modifica produs</a>
+                }
+            </div>
+            <div class="col-md-3" style="display:flex;">
+                <h4>
+                    <i class="fa fa-dollar"> @Model.Price&ensp;&ensp;</i>
+                </h4>
+                <form method="post" action="/OrderDetails/New">
+                    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+                    <input type="hidden" name="Quantity" value="1" />
+                    <input type="hidden" name="UnitPrice" value="@Model.Price" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-shopping-bag">&ensp;Adauga in cos</i>
+                    </button>
+                </form>
+
+            </div>
+            <div class="col-md-4">
+                @if (ViewBag.esteAdmin)
+                {
+                    using (Html.BeginForm(actionName: "Delete", controllerName: "Products", method: FormMethod.Post, routeValues: new { id = @Model.ProductId }))
+                    {
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                        <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-trash"></i> Sterge produs</button>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form method="post" action="/Products/NewReview">
+                    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+           
+                    <label>
+                        Comentariu
+                    </label>
+                    <textarea class="form-control" name="Content" style="box-sizing: border-box; max-width: 100%; min-height:150px;"></textarea>
+                    @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+                    <h5 class="text-danger">@ViewBag.Message</h5>
+                    <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Comenteaza</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+@foreach (var comm in Model.Comments)
+{
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-7" style="border-bottom:1px solid black">
+            <br />
+            <div>
+                <strong>@comm.User.UserName</strong><br />
+                
+            </div>
+
+            <div>
+                <p>@comm.Content</p>
+                <small class="pull-right">@comm.Date</small>
+            </div>
+
+            @if (comm.UserId == ViewBag.UtilizatorCurent || ViewBag.esteAdmin)
+            {
+                <div style="display: inline-block; float : left; margin-right: 15px">
+                    <a class="fa fa-edit" href="/Comments/Edit/@comm.CommentId"></a>
+                </div>
+                <div style="display: inline-block; float : left">
+                    <form method="post" action="/Comments/Delete/@comm.CommentId">
+                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                    </form>
+                </div>
+            }
+            <br />
+            <br />
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+}
