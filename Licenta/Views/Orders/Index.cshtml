@@ -3,5 +3,17 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
+<br />
 
+@foreach (var order in ViewBag.Orders)
+{
+    @Html.Label("OrderId", "ID comanda")
+    <p>@order.OrderId</p>
+    <p>@order.OrderDate</p>
+    <a class="btn btn-success" href="/Orders/Show/@order.OrderId">Detalii comanda</a>
+    <br />
+    <hr />
+    <br />
+}
+<br />

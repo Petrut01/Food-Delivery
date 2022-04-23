@@ -12,9 +12,20 @@ namespace Licenta.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Orders
+       [Authorize(Roles = "User,Admin")]
         public ActionResult Index()
         {
+            var userCurent = User.Identity.GetUserId();
+            ShoppingCart cart = db.ShoppingCarts.Where(a => a.UserId == userCurent).First();
+
+            var orderDetails = from orderdetail in db.OrderDetails
+                           where orderdetail.ShoppingCartId == cart.ShoppingCartId
+                           select orderdetail;
+
+            var myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList(); 
+            
+
+            ViewBag.Orders = myOrders;
             return View();
         }
 
@@ -22,17 +33,18 @@ namespace Licenta.Controllers
         public ActionResult New()
         {
             Order order = new Order();
-            order.OrderDate = DateTime.Now;
+            
             var userCurent = User.Identity.GetUserId();
             ShoppingCart cart = db.ShoppingCarts.Where(a => a.UserId == userCurent).First();
             order.OrderDetails = db.OrderDetails.Where(ord => ord.IsInCurrentCart == true && ord.ShoppingCartId == cart.ShoppingCartId).ToList();
+            
+            ViewBag.OrderDetails = order.OrderDetails;
             float total = 0;
             foreach (var item in order.OrderDetails)
             {
                 total += item.UnitPrice * item.Quantity;
             }
-
-            order.Total = total;
+            ViewBag.Total = total;
 
             return View(order);
         }
@@ -46,22 +58,51 @@ namespace Licenta.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.Orders.Add(order);
-                    db.SaveChanges();
-                    TempData["message"] = "Comanda a fost plasata!";
-                    return Redirect("/Products/Index");
+                    order.OrderDate = DateTime.Now;
+                    var userCurent = User.Identity.GetUserId();
+                    ShoppingCart cart = db.ShoppingCarts.Where(a => a.UserId == userCurent).First();
+                    order.OrderDetails = db.OrderDetails.Where(ord => ord.IsInCurrentCart == true && ord.ShoppingCartId == cart.ShoppingCartId).ToList();
+                    if (order.OrderDetails.Count > 0)
+                    {
+                        foreach (var orderDetail in order.OrderDetails)
+                        {
+                            orderDetail.IsInCurrentCart = false;
+                        }
+                        db.Orders.Add(order);
+                        Delivery delivery = new Delivery();
+                        delivery.OrderId = order.OrderId;
+                        delivery.IsFinished = false;
+                        delivery.IsTakenByDriver = false;
+                        db.Deliveries.Add(delivery);
+                        db.SaveChanges();
+                        TempData["message"] = "Comanda a fost plasata!";
+                        return Redirect("/Products/Index");
+                    } else
+                    {
+                        TempData["message"] = "Adaugati produse in cos inainte de a plasa comanda.";
+                        return Redirect("/Products/Index");
+                    }
+                    
                 }
                 else
                 {
-                    
                     return View(order);
                 }
             }
             catch (Exception e)
             {
-                
                 return View(order);
             }
+        }
+
+        public ActionResult Show(int id)
+        {
+            Order order = db.Orders.Find(id);
+            ViewBag.OrderDetails = order.OrderDetails;
+
+            
+            return View(order);
+
         }
 
         [HttpDelete]
@@ -77,6 +118,10 @@ namespace Licenta.Controllers
                 if (deliveryForOrder.IsFinished == false)
                 {
                     db.Orders.Remove(order);
+                    foreach(var detail in order.OrderDetails)
+                    {
+                        db.OrderDetails.Remove(detail);
+                    }
                     db.SaveChanges();
                     TempData["message"] = "Comanda a fost anulata!";
                     return RedirectToAction("Index");

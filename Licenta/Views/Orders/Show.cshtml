@@ -1,7 +1,63 @@
-﻿
-@{
-    ViewBag.Title = "Show";
-}
+﻿@model Licenta.Models.Order
 
-<h2>Show</h2>
+<p>
+    Comanda #@Model.OrderId plasata la @Model.OrderDate este 
+</p>
+
+<div>
+    @foreach (var detail in ViewBag.OrderDetails)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color:white;">
+                <h4 class="text-primary pull-left">@detail.Product.ProductName x <b>@detail.Quantity</b></h4>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img-responsive" src="@detail.Product.Photo" style="margin:auto;" alt="poza produsului" />
+                    </div>
+                    <div class="col-md-5">
+                        <p style="overflow:hidden;">@detail.Product.Ingredients</p>
+                    </div>
+                    <div class="col-md-4">
+                         
+                     </div>
+                        <h4 class="text-center">
+                            @{float subtotal = detail.UnitPrice * detail.Quantity; }
+                            Subtotal:<i class="fa fa-dollar"> @subtotal </i>
+                        </h4>
+                    </div>
+                </div>
+        </div>
+    }
+    
+</div>
+
+<div class="panel panel-default">
+    
+    <div class="panel panel-heading">
+        <h3><b>
+                Adresa de livrare
+            </b>
+        </h3>
+    </div>
+    <div class="panel panel-body">
+        <p>
+            @Model.FirstName @Model.LastName
+        </p>
+        <p>
+            @Model.Address, @Model.City
+        </p>
+        <p>
+            @Model.PhoneNumber
+        </p>
+    </div>
+    <div class="panel panel-footer">
+        <h4 class="text-center">
+            Total: @Model.Total
+        </h4>
+    </div>
+
+</div>
 

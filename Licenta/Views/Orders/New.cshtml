@@ -1,7 +1,103 @@
-﻿
-@{
-    ViewBag.Title = "New";
-}
+﻿@model Licenta.Models.Order
 
-<h2>New</h2>
 
+<h2>Checkout</h2>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm(actionName: "New", controllerName: "Orders"))
+            {
+                @Html.Label("FirstName", "Prenume")
+                <br />
+                @Html.TextBox("FirstName", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "text-danger" })
+                <br />
+
+                @Html.Label("LastName", "Nume")
+                <br />
+                @Html.TextBox("LastName", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger" })
+                <br />
+
+                @Html.Label("PhoneNumber", "Numar de telefon")
+                <br />
+                @Html.TextBox("PhoneNumber", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, null, new { @class = "text-danger" })
+                <br />
+
+                @Html.Label("Address", "Adresa")
+                <br />
+                @Html.TextBox("Address", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Address, null, new { @class = "text-danger" })
+                <br />
+
+                @Html.Label("City", "Oras")
+                <br />
+                @Html.TextBox("City", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.City, null, new { @class = "text-danger" })
+                <br />
+                
+                @Html.HiddenFor(m => m.Total, htmlAttributes: new { @Value = ViewBag.Total })
+                <button class="btn btn-sm btn-success" type="submit">Plaseaza Comanda</button>
+            }
+        </div>
+        <div class="col-md-6">
+            @foreach (var detail in Model.OrderDetails)
+            {
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="background-color:white;">
+                                    <h4 class="text-primary pull-left">@detail.Product.ProductName</h4>
+                                    <form method="post" action="/OrderDetails/Delete/@detail.OrderDetailId">
+                                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                        <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-trash"></i>&ensp;Elimina din cos</button>
+                                    </form>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img class="img-responsive" src="@detail.Product.Photo" style="margin:auto;" alt="poza produsului" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p style="overflow:hidden;">@detail.Product.Ingredients</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-3">
+                                                    <form method="post" action="/OrderDetails/EditMinus/@detail.OrderDetailId">
+                                                        @Html.HttpMethodOverride(HttpVerbs.Put)
+                                                        <button class="btn btn-info" type="submit"><i class="fa fa-minus"></i></button>
+                                                    </form>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <h4><b>@detail.Quantity</b></h4>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <form method="post" action="/OrderDetails/EditPlus/@detail.OrderDetailId">
+                                                        @Html.HttpMethodOverride(HttpVerbs.Put)
+                                                        <button class="btn btn-info" type="submit"><i class="fa fa-plus"></i></button>
+                                                    </form>
+                                                </div>
+                                                <div class="col-md-2"></div>
+                                            </div>
+                                            <h4 class="text-center">
+                                                @{float subtotal = detail.UnitPrice * detail.Quantity; }
+                                                Subtotal:<i class="fa fa-dollar"> @subtotal </i>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+             }
+                        <div>
+                            <h4 class="text-center">
+                                Total: @ViewBag.Total
+                            </h4>
+                        </div>
+     
+         </div>
+     </div>
+</div>

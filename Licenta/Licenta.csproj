@@ -274,10 +274,11 @@
     <Content Include="Views\Products\Show.cshtml" />
     <Content Include="Views\Products\New.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Deliveries\MyOrders.cshtml" />
+    <Content Include="Views\Deliveries\AvailableOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Deliveries\" />
     <Folder Include="Views\OrderDetails\" />
   </ItemGroup>
   <ItemGroup>

@@ -31,7 +31,7 @@ namespace Licenta.Controllers
             
             orderDetail.IsInCurrentCart = true;
 
-            if (cart.OrderDetails.Where(a => a.ProductId == orderDetail.ProductId).Count() != 0 && orderDetail.IsInCurrentCart == true)
+            if (cart.OrderDetails.Where(a => a.ProductId == orderDetail.ProductId && a.IsInCurrentCart == true).Count() != 0)
             {
                 OrderDetail order_temp = cart.OrderDetails.Where(a => a.ProductId == orderDetail.ProductId).First();
                 order_temp.Quantity++;

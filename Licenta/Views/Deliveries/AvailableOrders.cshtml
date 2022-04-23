@@ -1,0 +1,32 @@
+﻿@model Licenta.Models.Delivery
+
+@if (ViewBag.AvailableOrders != null)
+{
+    foreach (var order in ViewBag.AvailableOrders)
+    {
+        <div class="panel panel-default">
+            <div class="panel page-header">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Comanda #@order.OrderId</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Total: @order.Order.Total</h3>
+                        <h4>Adresa: @order.Order.Address</h4>
+                        <h4>Client: @order.Order.FirstName @order.Order.LastName</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <form method="post" action="/Deliveries/TakeOrder/@order.DeliveryId">
+                            @Html.HttpMethodOverride(HttpVerbs.Put)
+                            <button class="btn btn-info" type="submit"><i class="bi bi-check2"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+} else { 
+    <h2> <b>Nu exista nicio comanda ce necesita livrare</b></h2>
+}
+
+

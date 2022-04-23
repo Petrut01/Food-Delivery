@@ -14,7 +14,7 @@ namespace Licenta.Models
 
         public int OrderId { get; set; }
 
-        public int DriverId { get; set; }
+        public string DriverId { get; set; }
 
         public bool IsFinished { get; set; }
 
