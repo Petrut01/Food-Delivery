@@ -2,12 +2,12 @@
 
 
 
-<h2>Editare review</h2>
+<h2>Editare comentariu</h2>
 <form method="post" action="/Comments/Edit/@Model.CommentId">
     @Html.HttpMethodOverride(HttpVerbs.Put)
     
     <label>
-        Continut review
+        Continut comentariu
     </label>
     <br />
     <div style="width:100%;">
@@ -16,6 +16,6 @@
 
     @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
     <br />
-    <button class="btn btn-success" type="submit"><i class="fa fa-edit"></i> Editeaza review</button>
+    <button class="btn btn-success" type="submit"><i class="fa fa-edit"></i> Editeaza comentariu</button>
 </form>
 

@@ -22,8 +22,17 @@ namespace Licenta.Controllers
                            where orderdetail.ShoppingCartId == cart.ShoppingCartId
                            select orderdetail;
 
-            var myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList(); 
-            
+            var myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList();
+            myOrders.Reverse();
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message = TempData["message"].ToString();
+            }
+            if (TempData.ContainsKey("error"))
+            {
+                ViewBag.error = TempData["error"].ToString();
+            }
+
 
             ViewBag.Orders = myOrders;
             return View();
@@ -76,11 +85,11 @@ namespace Licenta.Controllers
                         db.Deliveries.Add(delivery);
                         db.SaveChanges();
                         TempData["message"] = "Comanda a fost plasata!";
-                        return Redirect("/Products/Index");
+                        return RedirectToAction("Index");
                     } else
                     {
-                        TempData["message"] = "Adaugati produse in cos inainte de a plasa comanda.";
-                        return Redirect("/Products/Index");
+                        TempData["error"] = "Adaugati produse in cos inainte de a plasa comanda.";
+                        return RedirectToAction("Index");
                     }
                     
                 }
@@ -95,6 +104,7 @@ namespace Licenta.Controllers
             }
         }
 
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Show(int id)
         {
             Order order = db.Orders.Find(id);
@@ -128,13 +138,13 @@ namespace Licenta.Controllers
                 }
                 else
                 {
-                    TempData["message"] = "Nu puteti anula o comanda deja finalizata!";
+                    TempData["error"] = "Nu puteti anula o comanda deja finalizata!";
                     return RedirectToAction("Index");
                 }
             }
             else
             {
-                TempData["message"] = "Nu puteti anula comanda, deoarece aceasta a fost deja preluata de un curier.";
+                TempData["error"] = "Nu puteti anula comanda, deoarece aceasta a fost deja preluata de un curier.";
                 return RedirectToAction("Index");
             }
         }

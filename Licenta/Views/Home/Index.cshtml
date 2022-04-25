@@ -3,29 +3,57 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
+    <h1>Food Delivery</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
+
+
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-8">
+        <img class="img-responsive" src="http://www.dominos-pizza.ro/images/banners/423_en_banner.jpg" />
+
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <img class="img-responsive" src="https://hips.hearstapps.com/hmg-prod/images/delish-bucatinipasta-028-ls-1607552701.jpg?crop=1.00xw%3A0.846xh%3B0%2C0.0385xh&resize=480%3A270" />
+
+        <hr />
+
+        <img class="img-responsive" src="https://iuliaionescu.ro/wp-content/uploads/2019/02/sk-uVPV_nV17Tw-unsplash.jpg" />
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+</div>
+
+<h1> Cele mai populare produse:</h1>
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
+    @foreach (Licenta.Models.Product product in ViewBag.Top3Products)
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a href="/Products/Show/@product.ProductId">
+                    <img class="img-responsive" src="@product.Photo" alt="poza produsului" style="height:200px; margin:auto;" />
+                </a>
+                <a href="/Products/Show/@product.ProductId">
+                    <h3 class="text-center text-primary">@product.ProductName</h3>
+                </a>
+            </div>
+            <div class="panel-footer" style="display:block">
+                <h4 class="pull-left">
+                    <i class="fa fa-dollar pull-left"> @product.Price</i>
+                </h4>
+                <div class="pull-right">
+                    <form method="post" action="/OrderDetails/New">
+                        <input type="hidden" name="ProductId" value="@product.ProductId" />
+                        <input type="hidden" name="Quantity" value="1" />
+                        <input type="hidden" name="UnitPrice" value="@product.Price" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-shopping-bag">&ensp;Adauga in cos</i>
+                        </button>
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    }
 </div>

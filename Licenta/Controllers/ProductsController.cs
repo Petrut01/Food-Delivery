@@ -17,19 +17,11 @@ namespace Licenta.Controllers
 
         private List<Product> produsePtSortare;
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var products = db.Products.Include("Category").Include("User");
-            if (produsePtSortare == null)
-            {
-                produsePtSortare = products.ToList();
-            }
-
-            if (TempData.ContainsKey("Produse"))
-            {
-                produsePtSortare = TempData["Produse"] as List<Product>;
-            }
-
+            var products = db.Products.Include("Category").Include("User").Where(prod => prod.CategoryId == id);
+       
+            var produse = products.ToList();
 
             var search = "";
 
@@ -42,58 +34,17 @@ namespace Licenta.Controllers
                 List<int> mergedIds = productIds.Union(commentIds).ToList();
 
                 products = (DbQuery<Product>)db.Products.Where(product => mergedIds.Contains(product.ProductId)).Include("Category").Include("User");
-                produsePtSortare = products.ToList();
+                produse = products.ToList();
             }
 
-           
-
-            var totalProducts = produsePtSortare.Count();
-
-            var currentPage = Convert.ToInt32(Request.Params.Get("page"));
-
-            var offset = 0;
-
-            if (!currentPage.Equals(0))
-            {
-                offset = (currentPage - 1) * this._perPage;
-            }
-            var paginatedProducts = produsePtSortare.Skip(offset).Take(this._perPage);
-
-            if (TempData.ContainsKey("message"))
-            {
-                ViewBag.message = TempData["message"].ToString();
-            }
-
-            //ViewBag.perPage = this._perPage;
-            ViewBag.total = totalProducts;
-            ViewBag.lastPage = Math.Ceiling((float)totalProducts / (float)this._perPage);
-            ViewBag.Products = paginatedProducts;
+            ViewBag.Products = produse;
 
             ViewBag.SearchString = search;
 
             return View();
         }
 
-        public ActionResult SortareProduse(int id)
-        {
-            switch (id)
-            {
-                case 1:
-                    produsePtSortare = db.Products.Include("Category").Include("User").ToList();
-                    break;
-                case 2:
-                    produsePtSortare = db.Products.Include("Category").Include("User").ToList();
-                    produsePtSortare.Reverse();
-                    break;
-                case 3:
-                    produsePtSortare = db.Products.Include("Category").Include("User").ToList();
-                    break;
-                default:
-                    break;
-            }
-            TempData["Produse"] = produsePtSortare;
-            return Redirect("/Products/Index");
-        }
+       
 
         public ActionResult Show(int id)
         {
@@ -111,7 +62,7 @@ namespace Licenta.Controllers
         }
 
 
-        [Authorize(Roles = "Colaborator,Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult New()
         {
             Product product = new Product();
@@ -121,7 +72,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Colaborator,Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult New(Product product)
         {
 
@@ -147,7 +98,7 @@ namespace Licenta.Controllers
             }
         }
 
-        [Authorize(Roles = "Colaborator,Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
 
@@ -166,7 +117,7 @@ namespace Licenta.Controllers
 
 
         [HttpPut]
-        [Authorize(Roles = "Colaborator,Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Product requestProduct)
         {
             try
@@ -205,7 +156,7 @@ namespace Licenta.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Colaborator,Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Product product = db.Products.Find(id);

@@ -1,7 +1,51 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿<div class="container-fluid">
+ 
+    <div class="row" style="margin:5px 0 5px 0;">
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form class="card card-sm" method="GET">
+                <input class="form-control form-control-lg form-controlborderless pull-left" type="text" name="search" value="@ViewBag.SearchString" placeholder="Search topics or keywords">
+                <button class="btn btn-success pull-right" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
 
-<h2>Index</h2>
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
+        @foreach (Licenta.Models.Product product in ViewBag.Products)
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="/Products/Show/@product.ProductId">
+                        <img class="img-responsive" src="@product.Photo" alt="poza produsului" style="height:200px; margin:auto;" />
+                    </a>
+                    <a href="/Products/Show/@product.ProductId">
+                        <h3 class="text-center text-primary">@product.ProductName</h3>
+                    </a>
+                </div>
+                <div class="panel-footer" style="display:block">
+                    <h4 class="pull-left">
+                        <i class="fa fa-dollar pull-left"> @product.Price</i>
+                    </h4>
+                    <div class="pull-right">
+                        <form method="post" action="/OrderDetails/New">
+                            <input type="hidden" name="ProductId" value="@product.ProductId" />
+                            <input type="hidden" name="Quantity" value="1" />
+                            <input type="hidden" name="UnitPrice" value="@product.Price" />
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-shopping-bag">&ensp;Adauga in cos</i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 

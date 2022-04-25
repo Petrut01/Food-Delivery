@@ -16,9 +16,10 @@
                         <h4>Client: @order.Order.FirstName @order.Order.LastName</h4>
                     </div>
                     <div class="col-md-4">
+                        
                         <form method="post" action="/Deliveries/TakeOrder/@order.DeliveryId">
                             @Html.HttpMethodOverride(HttpVerbs.Put)
-                            <button class="btn btn-info" type="submit"><i class="bi bi-check2"></i></button>
+                            <button class="btn btn-info" type="submit">Preluati comanda</button>
                         </form>
                     </div>
                 </div>

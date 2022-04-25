@@ -6,14 +6,52 @@
 <h2>@ViewBag.Title</h2>
 <br />
 
+@if (ViewBag.message != null)
+{
+    <div class="alert alert-success" role="alert">@ViewBag.message</div>
+}
+@if (ViewBag.error != null)
+{
+    <div class="alert alert-danger" role="alert">@ViewBag.error</div>
+}
+
+
 @foreach (var order in ViewBag.Orders)
 {
-    @Html.Label("OrderId", "ID comanda")
-    <p>@order.OrderId</p>
-    <p>@order.OrderDate</p>
-    <a class="btn btn-success" href="/Orders/Show/@order.OrderId">Detalii comanda</a>
-    <br />
-    <hr />
-    <br />
+    <div class="panel panel-default">
+        <div class="panel panel-heading">
+            <div class="row">
+                <div class="col-md-4">
+                    <div style="text-align: center">
+                        @Html.Label("OrderId", "ID comanda: ")
+                        @order.OrderId
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <div style="display: inline-block; float : right">
+                        <form method="post" action="/Orders/Delete/@order.OrderId">
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-9">
+                    Comanda a fost plasata pe data de @order.OrderDate
+                </div>
+                <div class="col-md-3">
+
+                    <a class="btn btn-success" href="/Orders/Show/@order.OrderId">Detalii comanda</a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 }
 <br />

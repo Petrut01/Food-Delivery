@@ -16,6 +16,7 @@ namespace Licenta.Controllers
         public ActionResult AvailableOrders()
         {
             ViewBag.AvailableOrders = db.Deliveries.Where(d => d.IsTakenByDriver == false && d.IsFinished == false).ToList();
+            ViewBag.AvailableOrders.Reverse();
             return View();
         }
 
@@ -24,14 +25,15 @@ namespace Licenta.Controllers
         {
             var userCurent = User.Identity.GetUserId();
             ViewBag.MyOrders = db.Deliveries.Where(d => d.DriverId == userCurent).ToList();
+            ViewBag.MyOrders.Reverse();
             return View();
         }
 
         [HttpPut]
         [Authorize(Roles = "Driver,Admin")]
-        public ActionResult TakeOrder(int deliveryId)
+        public ActionResult TakeOrder(int id)
         {
-            Delivery delivery = db.Deliveries.Find(deliveryId);
+            Delivery delivery = db.Deliveries.Find(id);
             delivery.DriverId = User.Identity.GetUserId();
             delivery.IsTakenByDriver = true;
             db.SaveChanges();
@@ -42,9 +44,9 @@ namespace Licenta.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Driver,Admin")]
-        public ActionResult FinishOrder(int deliveryId)
+        public ActionResult FinishOrder(int id)
         {
-            Delivery delivery = db.Deliveries.Find(deliveryId);
+            Delivery delivery = db.Deliveries.Find(id);
             delivery.IsFinished = true;
             db.SaveChanges();
             return RedirectToAction("MyOrders");

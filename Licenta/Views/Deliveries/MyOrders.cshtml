@@ -1,7 +1,49 @@
-﻿
-@{
-    ViewBag.Title = "MyOrders";
-}
+﻿@model Licenta.Models.Delivery
 
-<h2>MyOrders</h2>
+@if (ViewBag.MyOrders != null)
+{
+    foreach (var order in ViewBag.MyOrders)
+    {
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Comanda #@order.OrderId</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>Total: @order.Order.Total</h4>
+                        <h4>Adresa: @order.Order.Address</h4>
+                        <h4>Nume client: @order.Order.FirstName @order.Order.LastName</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>
+                            Statusul comenzii:</h4>
+                            @if (order.IsFinished == false)
+                            {
+                                <h4>In desfasurare </h4>
+                            <form method="post" action="/Deliveries/FinishOrder/@order.DeliveryId">
+                                @Html.HttpMethodOverride(HttpVerbs.Put)
+                                <button class="btn btn-info" type="submit"><i class="bi bi-check2"></i></button>
+                            </form>
+                    }
+                    else
+                    {
+                         <h4>Finalizata</h4>
+                    }
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h2> <b>Nu aveti nicio comanda preluata.</b></h2>
+    <a class="btn btn-info" href="/Deliveries/AvailableOrders"><i class="fa fa-arrow-left"></i> Comenzi disponibile pentru livrare</a>
+}
 

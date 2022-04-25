@@ -13,6 +13,7 @@ namespace Licenta.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             if (TempData.ContainsKey("message"))
@@ -27,18 +28,21 @@ namespace Licenta.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Show(int id)
         {
             Category category = db.Categories.Find(id);
             return View(category);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult New()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult New(Category cat)
         {
             try
@@ -53,6 +57,7 @@ namespace Licenta.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             Category category = db.Categories.Find(id);
@@ -60,6 +65,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Category requestCategory)
         {
             try
@@ -82,6 +88,7 @@ namespace Licenta.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Category category = db.Categories.Find(id);

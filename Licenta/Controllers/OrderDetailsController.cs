@@ -21,6 +21,7 @@ namespace Licenta.Controllers
 
         //de setat in view productid, pretul, cantitate 1 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult New(OrderDetail orderDetail)
         {
             var userCurent = User.Identity.GetUserId();
@@ -47,6 +48,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult EditPlus(int id)
         {
             OrderDetail orderDetail = db.OrderDetails.Find(id);
@@ -57,6 +59,7 @@ namespace Licenta.Controllers
 
 
         [HttpPut]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult EditMinus(int id)
         {
             OrderDetail orderDetail = db.OrderDetails.Find(id);
@@ -75,6 +78,7 @@ namespace Licenta.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Delete(int id)
         {
             OrderDetail orderDetail = db.OrderDetails.Find(id);
