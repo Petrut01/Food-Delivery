@@ -30,12 +30,12 @@ namespace Licenta.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Noua parola")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirma noua parola")]
+        [Compare("NewPassword", ErrorMessage = "Parola introdusa pentru confirmare difera de parola noua.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,18 +43,18 @@ namespace Licenta.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Parola curenta")]
         public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Parola noua")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirma noua parola")]
+        [Compare("NewPassword", ErrorMessage = "Parola introdusa pentru confirmare difera de parola noua.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -62,7 +62,7 @@ namespace Licenta.Models
     {
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Numar de telefon")]
         public string Number { get; set; }
     }
 

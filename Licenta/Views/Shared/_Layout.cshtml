@@ -17,18 +17,73 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <!--@Html.ActionLink("CFP Restaurant", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
+
+                @if (User.IsInRole("Driver") || User.IsInRole("Admin"))
+                {
+                    <div class="dropdown">
+                        <button class="buton_setari" style="background-color:transparent; border: none; outline: none; font-size:32px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                            @if (User.IsInRole("Driver"))
+                            {
+                                <li>@Html.ActionLink("Preia o comanda", "AvailableOrders", "Deliveries")</li>
+                                <li>@Html.ActionLink("Livrarile mele", "MyOrders", "Deliveries")</li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>@Html.ActionLink("Adaugare produs", "New", "Products")</li>
+                                <li>@Html.ActionLink("Afisare categorii", "Index", "Categories")</li>
+                                <li>@Html.ActionLink("Adaugare categorii", "New", "Categories")</li>
+                                <li>@Html.ActionLink("Lista useri", "Index", "Users")</li>
+                                <li>@Html.ActionLink("Istoric comenzi", "AllOrders", "Users")</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/Orders/New">
+                            <i class="glyphicon glyphicon-shopping-cart"></i>
+
+                        </a>
+                    </li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-center">
 
                     <li>@Html.ActionLink("Pizza", "Index", "Products", new { id = "1" }, null)</li>
                     <li>@Html.ActionLink("Burgeri", "Index", "Products", new { id = "2" }, null)</li>
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li><!--@Html.ActionLink("CFP Restaurant", "Index", "Home", new { area = "" }, new { @class = "navbar-brand font-logo" })-->
+                        <div class="logo">
+                            <a href="/Home/Index">
+                                <h3><strong>CFP</strong> <span>Restaurant</span></h3>
+                                
+                            </a>
+                        </div>
+                    
+                    </li>
                     <li>@Html.ActionLink("Paste", "Index", "Products", new { id = "3" }, null)</li>
                     <li>@Html.ActionLink("Bauturi", "Index", "Products", new { id = "4" }, null)</li>
 
 
+                </ul>
+                <ul class="nav navbar-nav navbar-center-responsive">
+                    <li>
+                       <div class="logo">
+                            <a href="/Home/Index">
+                                <h3><strong>CFP</strong> <span>Restaurant</span></h3>
+
+                            </a>
+                        </div>
+
+                    </li>
                 </ul>
                 
                 @Html.Partial("_LoginPartial")

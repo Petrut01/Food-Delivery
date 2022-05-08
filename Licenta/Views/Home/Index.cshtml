@@ -2,58 +2,113 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Food Delivery</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="jumbotron" style="background-image: url(https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80); background-size: 100% 100%;">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <div class="jumbotext">
+                <h1><strong>CFP Restaurant <br/>Best <br />in <br />town</strong> </h1>
+            </div>
+            
+            <div class="search-container">
+                
+                <form method="GET" action="/Products/Index/1">
+                    <input class="search-box" type="text" name="search" value="@ViewBag.SearchString" placeholder="Cauta un produs">
+                    <button class="search-button" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+
+                    <br />
+                   
+                </form>
+
+            </div>
+        <div class="col-md-4"></div>
+        
+        </div>
+    </div>
+    
 </div>
 
 
 
 <div class="row">
     <div class="col-md-8">
-        <img class="img-responsive" src="http://www.dominos-pizza.ro/images/banners/423_en_banner.jpg" />
-
-    </div>
-    <div class="col-md-4">
-        <img class="img-responsive" src="https://hips.hearstapps.com/hmg-prod/images/delish-bucatinipasta-028-ls-1607552701.jpg?crop=1.00xw%3A0.846xh%3B0%2C0.0385xh&resize=480%3A270" />
-
-        <hr />
-
-        <img class="img-responsive" src="https://iuliaionescu.ro/wp-content/uploads/2019/02/sk-uVPV_nV17Tw-unsplash.jpg" />
-
-    </div>
-</div>
-
-<h1> Cele mai populare produse:</h1>
-<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
-    @foreach (Licenta.Models.Product product in ViewBag.Top3Products)
-    {
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <a href="/Products/Show/@product.ProductId">
-                    <img class="img-responsive" src="@product.Photo" alt="poza produsului" style="height:200px; margin:auto;" />
-                </a>
-                <a href="/Products/Show/@product.ProductId">
-                    <h3 class="text-center text-primary">@product.ProductName</h3>
-                </a>
-            </div>
-            <div class="panel-footer" style="display:block">
-                <h4 class="pull-left">
-                    <i class="fa fa-dollar pull-left"> @product.Price</i>
-                </h4>
-                <div class="pull-right">
-                    <form method="post" action="/OrderDetails/New">
-                        <input type="hidden" name="ProductId" value="@product.ProductId" />
-                        <input type="hidden" name="Quantity" value="1" />
-                        <input type="hidden" name="UnitPrice" value="@product.Price" />
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-shopping-bag">&ensp;Adauga in cos</i>
-                        </button>
-                    </form>
-                </div>
-                <div class="clearfix"></div>
+        <div class="container1">
+            <a href="/Products/Index/1">
+                <img class="img-responsive" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
+            </a>
+            <div class="top-left textpicture">
+                <h1 class="textpicture">Pizza</h1>
             </div>
         </div>
-    }
+        
+        
+    </div>
+    <div class="col-md-4">
+        <div class="container1">
+            <a href="/Products/Index/3">
+                <img class="img-responsive" src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=932&q=80" />
+
+            </a>
+            <div class="bottom-left textpicture">
+                <h1>Paste</h1>
+            </div>
+        </div>
+        <hr />
+        <div class="container1">
+            <a href="/Products/Index/2">
+                <img class="img-responsive" src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGJ1cmdlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" />
+
+            </a>
+            <div class="bottom-left textpicture">
+                <h1>Burgeri</h1>
+            </div>
+        </div>
+    </div>
 </div>
+
+<br />
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center ">
+        
+            <h1 > <strong>Cele mai populare produse ale noastre</strong></h1>
+  
+    </div>
+    <div class="panel panel-body">
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
+            @foreach (Licenta.Models.Product product in ViewBag.Top3Products)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="/Products/Show/@product.ProductId">
+                            <img class="img-responsive" src="@product.Photo" alt="poza produsului" style="height:200px; margin:auto;" />
+                        </a>
+                        <a href="/Products/Show/@product.ProductId" style="text-decoration: none">
+                            <h3 class="text-center text-primary" >@product.ProductName</h3>
+                        </a>
+                    </div>
+                    <div class="panel-footer" style="display:block">
+                        <h4 class="pull-left">
+                             @product.Price lei
+                        </h4>
+                        <div class="pull-right">
+                            <form method="post" action="/OrderDetails/New">
+                                <input type="hidden" name="ProductId" value="@product.ProductId" />
+                                <input type="hidden" name="Quantity" value="1" />
+                                <input type="hidden" name="UnitPrice" value="@product.Price" />
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-shopping-bag">&ensp;Adauga in cos</i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

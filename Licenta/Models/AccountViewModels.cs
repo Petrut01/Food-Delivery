@@ -55,10 +55,10 @@ namespace Licenta.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Tine-ma minte")]
         public bool RememberMe { get; set; }
     }
 
@@ -70,14 +70,14 @@ namespace Licenta.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} trebuie sa aiba cel putin {2} caractere lungime.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirma parola")]
+        [Compare("Password", ErrorMessage = "Parola introdusa pentru confirmare difera de parola noua.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -91,12 +91,12 @@ namespace Licenta.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirma Parola")]
+        [Compare("Password", ErrorMessage = "Parola introdusa pentru confirmare difera de parola noua.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

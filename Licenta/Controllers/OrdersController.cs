@@ -22,7 +22,7 @@ namespace Licenta.Controllers
                            where orderdetail.ShoppingCartId == cart.ShoppingCartId
                            select orderdetail;
 
-            var myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList();
+            IEnumerable<Order> myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList();
             myOrders.Reverse();
             if (TempData.ContainsKey("message"))
             {
@@ -33,6 +33,7 @@ namespace Licenta.Controllers
                 ViewBag.error = TempData["error"].ToString();
             }
 
+            
 
             ViewBag.Orders = myOrders;
             return View();
@@ -63,14 +64,15 @@ namespace Licenta.Controllers
         public ActionResult New(Order order)
         {
 
+            order.OrderDate = DateTime.Now;
+            var userCurent = User.Identity.GetUserId();
+            ShoppingCart cart = db.ShoppingCarts.Where(a => a.UserId == userCurent).First();
+            order.OrderDetails = db.OrderDetails.Where(ord => ord.IsInCurrentCart == true && ord.ShoppingCartId == cart.ShoppingCartId).ToList();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    order.OrderDate = DateTime.Now;
-                    var userCurent = User.Identity.GetUserId();
-                    ShoppingCart cart = db.ShoppingCarts.Where(a => a.UserId == userCurent).First();
-                    order.OrderDetails = db.OrderDetails.Where(ord => ord.IsInCurrentCart == true && ord.ShoppingCartId == cart.ShoppingCartId).ToList();
+                    
                     if (order.OrderDetails.Count > 0)
                     {
                         foreach (var orderDetail in order.OrderDetails)
@@ -81,7 +83,7 @@ namespace Licenta.Controllers
                         Delivery delivery = new Delivery();
                         delivery.OrderId = order.OrderId;
                         delivery.IsFinished = false;
-                        delivery.IsTakenByDriver = false;
+                       
                         db.Deliveries.Add(delivery);
                         db.SaveChanges();
                         TempData["message"] = "Comanda a fost plasata!";
@@ -95,6 +97,7 @@ namespace Licenta.Controllers
                 }
                 else
                 {
+
                     return View(order);
                 }
             }
@@ -109,7 +112,15 @@ namespace Licenta.Controllers
         {
             Order order = db.Orders.Find(id);
             ViewBag.OrderDetails = order.OrderDetails;
+            Delivery delivery = db.Deliveries.Where(d => d.OrderId == order.OrderId).First();
 
+            if (delivery.IsFinished == true)
+            {
+                ViewBag.Status = "finalizata";
+            }else
+            {
+                ViewBag.Status = "in desfasurare";
+            }
             
             return View(order);
 
@@ -123,17 +134,12 @@ namespace Licenta.Controllers
 
             var deliveryForOrder = db.Deliveries.Where(a => a.OrderId == order.OrderId).FirstOrDefault();
 
-            if (deliveryForOrder.IsTakenByDriver == false  )
+            if (deliveryForOrder.DriverId != null)
             {
                 if (deliveryForOrder.IsFinished == false)
                 {
-                    db.Orders.Remove(order);
-                    foreach(var detail in order.OrderDetails)
-                    {
-                        db.OrderDetails.Remove(detail);
-                    }
-                    db.SaveChanges();
-                    TempData["message"] = "Comanda a fost anulata!";
+
+                    TempData["error"] = "Nu puteti anula comanda, deoarece aceasta a fost deja preluata de un curier.";
                     return RedirectToAction("Index");
                 }
                 else
@@ -144,7 +150,14 @@ namespace Licenta.Controllers
             }
             else
             {
-                TempData["error"] = "Nu puteti anula comanda, deoarece aceasta a fost deja preluata de un curier.";
+                foreach (var detail in order.OrderDetails.ToList())
+                {
+                    db.OrderDetails.Remove(detail);
+                }
+                db.Orders.Remove(order);
+                db.SaveChanges();
+                TempData["message"] = "Comanda a fost anulata!";
+                
                 return RedirectToAction("Index");
             }
         }

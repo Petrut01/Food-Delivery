@@ -34,7 +34,7 @@ namespace Licenta.Controllers
 
             if (cart.OrderDetails.Where(a => a.ProductId == orderDetail.ProductId && a.IsInCurrentCart == true).Count() != 0)
             {
-                OrderDetail order_temp = cart.OrderDetails.Where(a => a.ProductId == orderDetail.ProductId).First();
+                OrderDetail order_temp = cart.OrderDetails.Where(a => a.ProductId == orderDetail.ProductId && a.IsInCurrentCart == true).First();
                 order_temp.Quantity++;
                 db.SaveChanges();
             }
@@ -44,7 +44,9 @@ namespace Licenta.Controllers
                 db.SaveChanges();
             }
 
-            return Redirect("/Products/Index");
+            var productAddedInCart = db.Products.Where(p => p.ProductId == orderDetail.ProductId).First();
+
+            return Redirect("/Products/Index/" + productAddedInCart.CategoryId);
         }
 
         [HttpPut]

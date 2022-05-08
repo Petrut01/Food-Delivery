@@ -1,8 +1,13 @@
 ﻿@model Licenta.Models.Order
 
-<p>
-    Comanda #@Model.OrderId plasata la @Model.OrderDate este 
-</p>
+<div class="text-center">
+    <h2>
+        Comanda #@Model.OrderId plasata la @Model.OrderDate este @ViewBag.Status.
+    </h2>
+    
+    <br/>
+</div>
+
 
 <div>
     @foreach (var detail in ViewBag.OrderDetails)
@@ -25,7 +30,7 @@
                      </div>
                         <h4 class="text-center">
                             @{float subtotal = detail.UnitPrice * detail.Quantity; }
-                            Subtotal:<i class="fa fa-dollar"> @subtotal </i>
+                            Subtotal: @subtotal lei
                         </h4>
                     </div>
                 </div>
@@ -55,7 +60,7 @@
     </div>
     <div class="panel panel-footer">
         <h4 class="text-center">
-            Total: @Model.Total
+            Total: @Model.Total lei
         </h4>
     </div>
 

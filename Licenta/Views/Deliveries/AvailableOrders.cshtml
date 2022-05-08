@@ -1,6 +1,6 @@
 ﻿@model Licenta.Models.Delivery
 
-@if (ViewBag.AvailableOrders != null)
+@if ((ViewBag.AvailableOrders as IList<Licenta.Models.Delivery>).Count() > 0)
 {
     foreach (var order in ViewBag.AvailableOrders)
     {
@@ -19,7 +19,7 @@
                         
                         <form method="post" action="/Deliveries/TakeOrder/@order.DeliveryId">
                             @Html.HttpMethodOverride(HttpVerbs.Put)
-                            <button class="btn btn-info" type="submit">Preluati comanda</button>
+                            <button class="btn btn-success" type="submit">Preluati comanda <i class="fa fa-check"></i></button>
                         </form>
                     </div>
                 </div>
@@ -27,7 +27,10 @@
         </div>
     }
 } else { 
+<div class="text-center">
     <h2> <b>Nu exista nicio comanda ce necesita livrare</b></h2>
+</div>
+    
 }
 
 

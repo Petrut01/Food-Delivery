@@ -1,21 +1,26 @@
 ﻿<div class="container-fluid">
  
-    <div class="row" style="margin:5px 0 5px 0;">
-        <div class="col-md-4">
-            
-        </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <form class="card card-sm" method="GET">
-                <input class="form-control form-control-lg form-controlborderless pull-left" type="text" name="search" value="@ViewBag.SearchString" placeholder="Search topics or keywords">
-                <button class="btn btn-success pull-right" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-                <div class="clearfix"></div>
-            </form>
+    <div class="jumbotron" style="background-image: url(https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80); background-size: cover;">
+        <div class="row" style="margin:5px 0 5px 0;">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <div class="search-container">
+                    <form class="card card-sm" method="GET">
+                        <input class="search-box" type="text" name="search" value="@ViewBag.SearchString" placeholder="Cauta un produs">
+                        <button class="search-button" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+            </div>
         </div>
     </div>
-
     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
         @foreach (Licenta.Models.Product product in ViewBag.Products)
         {
@@ -24,13 +29,13 @@
                     <a href="/Products/Show/@product.ProductId">
                         <img class="img-responsive" src="@product.Photo" alt="poza produsului" style="height:200px; margin:auto;" />
                     </a>
-                    <a href="/Products/Show/@product.ProductId">
+                    <a href="/Products/Show/@product.ProductId" style="text-decoration: none">
                         <h3 class="text-center text-primary">@product.ProductName</h3>
                     </a>
                 </div>
                 <div class="panel-footer" style="display:block">
                     <h4 class="pull-left">
-                        <i class="fa fa-dollar pull-left"> @product.Price</i>
+                         @product.Price lei
                     </h4>
                     <div class="pull-right">
                         <form method="post" action="/OrderDetails/New">

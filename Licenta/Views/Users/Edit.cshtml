@@ -1,0 +1,23 @@
+﻿@model Licenta.Models.ApplicationUser
+
+<ol class="breadcrumb">
+    <li><h3>@ViewBag.Title</h3></li>
+</ol>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Users", routeValues: new { id = Model.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    
+
+    <i class="glyphicon glyphicon-th-list"></i>
+    <label>Selectati rolul</label>
+    @Html.DropDownList("newRole", new SelectList(Model.AllRoles, "Value", "Text", ViewBag.userRole), null, new { @class = "form-control" })
+
+    <br />
+
+    <button class="btn btn-sm btn-success" type="submit">Modifica rolul utilizatorului</button>
+
+
+}
+

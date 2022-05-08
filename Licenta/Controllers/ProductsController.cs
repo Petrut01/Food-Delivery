@@ -13,9 +13,8 @@ namespace Licenta.Controllers
     public class ProductsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private int _perPage = 9;
+       
 
-        private List<Product> produsePtSortare;
         // GET: Products
         public ActionResult Index(int id)
         {
@@ -28,6 +27,16 @@ namespace Licenta.Controllers
             if (Request.Params.Get("search") != null)
             {
                 search = Request.Params.Get("search").Trim();
+                List<int> productIds = db.Products.Where(pr => pr.ProductName.Contains(search) || pr.Ingredients.Contains(search)).Select(p => p.ProductId).ToList();
+
+                List<int> commentIds = db.Comments.Where(comm => comm.Content.Contains(search)).Select(comm => comm.ProductId).ToList();
+                List<int> mergedIds = productIds.Union(commentIds).ToList();
+
+                products = (DbQuery<Product>)db.Products.Where(product => mergedIds.Contains(product.ProductId)).Include("Category").Include("User");
+                produse = products.ToList();
+            } else if (ViewBag.SearchString != null)
+            {
+                search = ViewBag.SearchString.Trim();
                 List<int> productIds = db.Products.Where(pr => pr.ProductName.Contains(search) || pr.Ingredients.Contains(search)).Select(p => p.ProductId).ToList();
 
                 List<int> commentIds = db.Comments.Where(comm => comm.Content.Contains(search)).Select(comm => comm.ProductId).ToList();
@@ -83,7 +92,7 @@ namespace Licenta.Controllers
                     db.Products.Add(product);
                     db.SaveChanges();
                     TempData["message"] = "Produsul a fost adaugat!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index/" + product.CategoryId);
                 }
                 else
                 {
@@ -111,7 +120,7 @@ namespace Licenta.Controllers
             else
             {
                 TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui produs !";
-                return RedirectToAction("Index");
+                return RedirectToAction("Show/" + product.ProductId);
             }
         }
 
@@ -134,12 +143,12 @@ namespace Licenta.Controllers
                             db.SaveChanges();
                             TempData["message"] = "Produsul a fost modificat!";
                         }
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index/" + product.CategoryId);
                     }
                     else
                     {
                         TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui produs!";
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index/" + product.CategoryId);
                     }
                 }
                 else
@@ -166,12 +175,12 @@ namespace Licenta.Controllers
                 db.Products.Remove(product);
                 db.SaveChanges();
                 TempData["message"] = "Produsul a fost sters!";
-                return RedirectToAction("Index");
+                return Redirect("/Home/Index");
             }
             else
             {
                 TempData["message"] = "Nu aveti dreptul sa stergeti un produs!";
-                return RedirectToAction("Index");
+                return Redirect("/Home/Index");
             }
         }
 

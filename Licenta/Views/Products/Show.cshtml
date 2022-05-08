@@ -1,12 +1,14 @@
 ﻿@model Licenta.Models.Product
 <br />
-<a class="btn btn-info" href="/Products/Index"><i class="fa fa-arrow-left"></i>  Inapoi la lista de produse</a>
+<a class="btn btn-info" href="/Products/Index/@Model.CategoryId"><i class="fa fa-arrow-left"></i>  Inapoi la lista de produse</a>
 <br />
 <br />
 <div class="panel panel-default">
-    <div class="panel-body">
+    <div class="panel-heading">
         <h4 class="text-center text-primary">@Model.ProductName</h4>
-        <hr />
+    </div>
+    <div class="panel-body">
+      
         <div class="row">
             <div class="col-md-4">
                 <img class="img-responsive" src="@Model.Photo" alt="poza produsului" />
@@ -14,10 +16,16 @@
                 
             </div>
             <div class="col-md-8">
-                <strong>Ingrediente produs</strong>
-                <br />
-                <p style="overflow:auto;">@Model.Ingredients</p>
-            </div>
+                <div style="align-items: center; justify-content: center; ">
+                    @if (Model.Ingredients != null)
+                    {
+                        <strong>Ingrediente produs</strong>
+                        <br />
+                    }
+
+                    <p style="overflow:auto;">@Model.Ingredients</p>
+                </div>
+                
         </div>
         
     </div>
@@ -32,7 +40,7 @@
             </div>
             <div class="col-md-3" style="display:flex;">
                 <h4>
-                    <i class="fa fa-dollar"> @Model.Price&ensp;&ensp;</i>
+                     @Model.Price lei &ensp;
                 </h4>
                 <form method="post" action="/OrderDetails/New">
                     <input type="hidden" name="ProductId" value="@Model.ProductId" />
@@ -70,11 +78,11 @@
                     <input type="hidden" name="ProductId" value="@Model.ProductId" />
            
                     <label>
-                        Comentariu
+                        Adauga un comentariu
                     </label>
                     <textarea class="form-control" name="Content" style="box-sizing: border-box; max-width: 100%; min-height:150px;"></textarea>
                     @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
-                    <h5 class="text-danger">@ViewBag.Message</h5>
+                    
                     <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Adauga comentariu</button>
                 </form>
             </div>

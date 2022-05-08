@@ -15,7 +15,7 @@ namespace Licenta.Controllers
         [Authorize(Roles = "Driver,Admin")]
         public ActionResult AvailableOrders()
         {
-            ViewBag.AvailableOrders = db.Deliveries.Where(d => d.IsTakenByDriver == false && d.IsFinished == false).ToList();
+            ViewBag.AvailableOrders = db.Deliveries.Where(d => d.DriverId == null && d.IsFinished == false).ToList();
             ViewBag.AvailableOrders.Reverse();
             return View();
         }
@@ -35,7 +35,7 @@ namespace Licenta.Controllers
         {
             Delivery delivery = db.Deliveries.Find(id);
             delivery.DriverId = User.Identity.GetUserId();
-            delivery.IsTakenByDriver = true;
+            
             db.SaveChanges();
 
             return RedirectToAction("AvailableOrders");

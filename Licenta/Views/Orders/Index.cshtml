@@ -1,10 +1,14 @@
 ﻿
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>@ViewBag.Title</h2>
-<br />
+
+@{
+    ViewBag.Title = "Comenzile mele";
+}
+<div class="text-center">
+    <h2>@ViewBag.Title</h2>
+    <br />
+</div>
+
 
 @if (ViewBag.message != null)
 {
@@ -14,6 +18,7 @@
 {
     <div class="alert alert-danger" role="alert">@ViewBag.error</div>
 }
+
 
 
 @foreach (var order in ViewBag.Orders)
@@ -29,6 +34,7 @@
 
                 </div>
                 <div class="col-md-8">
+                    
                     <div style="display: inline-block; float : right">
                         <form method="post" action="/Orders/Delete/@order.OrderId">
                             @Html.HttpMethodOverride(HttpVerbs.Delete)

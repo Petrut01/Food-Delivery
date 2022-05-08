@@ -1,0 +1,34 @@
+﻿<div class="text-center">
+    <div >
+        <h2><strong>Lista Useri</strong></h2>
+    </div>
+</div>
+<div class="panel-default">    
+    @foreach (var user in ViewBag.UsersList)
+    {
+        <div class="panel-heading">Nume utilizator: @user.UserName</div>
+
+        <div class="panel-body">
+
+            <i class="glyphicon glyphicon-envelope"></i> Email utilizator: <span class="label label-default">@user.Email</span>
+
+            <br /><br />
+
+            @if (@user.PhoneNumber != null)
+            {
+                <i class="glyphicon glyphicon-phone"></i>@:Telefon utilizator:<span class="label label-default">@user.PhoneNumber</span>
+            }
+
+        </div>
+
+        <div class="panel-footer">
+
+            <a class="btn btn-sm btn-success" href="/Users/Edit/@user.Id"> Editare rol utilizator</a>
+            <a class="btn btn-sm btn-success" href="/Users/Show/@user.Id"> Vizualizare utilizator</a>
+
+        </div>
+
+        <br /><br />
+    }
+</div>
+

@@ -1,0 +1,52 @@
+﻿<div class="text-center">
+    <h1>Istoricul comenzilor</h1>
+    <br />
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Nr curent</th>
+                    <th scope="col">Id comanda</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Nume client</th>
+                    <th scope="col">Telefon Client</th>
+                    
+                    <th scope="col">Status</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var counter = 1;
+                }
+
+                @foreach (var delivery in ViewBag.Deliveries)
+                {
+                    
+                    <tr>
+                        <th scope="row">@(counter++)</th>
+                        <td><a href="/Orders/Show/@delivery.OrderId">@delivery.OrderId</a></td>
+                        <td>@delivery.Order.Total lei</td>
+                        <td>@delivery.Order.FirstName @delivery.Order.LastName</td>
+                        <td>@delivery.Order.PhoneNumber</td>
+
+                        @if (delivery.IsFinished == false)
+                        {
+                            <td>In desfasurare</td>
+                        }
+                        else
+                        {
+                            <td>Finalizata</td>
+                        }
+
+                    </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
