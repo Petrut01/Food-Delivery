@@ -40,7 +40,9 @@
                                     <h4>In desfasurare </h4>
                                     <form method="post" action="/Deliveries/FinishOrder/@order.DeliveryId">
                                         @Html.HttpMethodOverride(HttpVerbs.Put)
-                                        <button class="btn btn-info" type="submit"><i class="bi bi-check2"></i></button>
+                                        <button class="btn btn-success" type="submit">
+                                            Finalizare <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                        </button>
                                     </form>
                                 }
                                 else

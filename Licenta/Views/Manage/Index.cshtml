@@ -3,59 +3,40 @@
     ViewBag.Title = "Contul meu";
 }
 
-<h2>@ViewBag.Title</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Parola:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Schimba parola", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
-             See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*  
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="text-center">
+                <h2>@ViewBag.Title</h2>
+                <br/>
+                <img class="img-responsive" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="height:200px; margin:auto;" alt="poza_utilizator" />
+                <br/>
+            </div>
+            <div class="col-md-5">
+                <h3> Parola:</h3>
+                <h3> Istoric Comenzi:</h3>
+            </div>
+            <div class="col-md-7">
+                @if (Model.HasPassword)
                 {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
+                    
+                    <h3>
+                        <a href="/Manage/ChangePassword">Schimba parola</a>
+                    </h3>
                 }
                 else
                 {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+                    @Html.ActionLink("Creare parola", "SetPassword")
                 }
-            </dd>
-        *@
-        @if (User.IsInRole("User"))
-        {
-
-        <dt>Istoric Comenzi:</dt>
-        <dd>@Html.ActionLink("Verifica istoricul comenzilor tale", "Index", "Orders")</dd>
-        }
-    </dl>
+                
+                <h3>
+                    <a href="/Orders/Index">Vezi istoricul comenzilor tale</a>
+                </h3>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
 </div>

@@ -21,7 +21,7 @@
                 @Html.Label("LastName", "Nume")
                 <br />
                 @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger" })
-                @Html.TextBox("LastName", null, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.LastName, new { @Value = "", @class = "form-control" })
 
                 <br />
 

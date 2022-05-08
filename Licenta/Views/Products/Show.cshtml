@@ -82,8 +82,11 @@
                     </label>
                     <textarea class="form-control" name="Content" style="box-sizing: border-box; max-width: 100%; min-height:150px;"></textarea>
                     @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
-                    
-                    <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Adauga comentariu</button>
+                    <div class="text-center">
+                        <br/>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Adauga comentariu</button>
+
+                    </div>
                 </form>
             </div>
         </div>
@@ -97,29 +100,32 @@
         <div class="col-md-1"></div>
         <div class="col-md-7" style="border-bottom:1px solid black">
             <br />
-            <div>
-                <strong>@comm.User.UserName </strong><br />
-                
-            </div>
-
-            <div>
-                <p>@comm.Content</p>
-                <small class="pull-right">@comm.Date</small>
-            </div>
-
-            @if (comm.UserId == ViewBag.UtilizatorCurent || ViewBag.esteAdmin)
-            {
-                <div style="display: inline-block; float : left; margin-right: 15px">
-                    <a class="fa fa-edit" href="/Comments/Edit/@comm.CommentId"></a>
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <strong>@comm.User.UserName </strong><br />
+                    <small>@comm.Date</small>
                 </div>
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Comments/Delete/@comm.CommentId">
-                        @Html.HttpMethodOverride(HttpVerbs.Delete)
-                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
-                    </form>
+                <div class="col-md-8">
+                    <div class="pull-right">
+                        @if (comm.UserId == ViewBag.UtilizatorCurent || ViewBag.esteAdmin)
+                        {
+                            <div style="display: inline-block; float : left; margin-right: 15px">
+                                <a class="fa fa-edit" href="/Comments/Edit/@comm.CommentId"></a>
+                            </div>
+                            <div style="display: inline-block; float : left">
+                                <form method="post" action="/Comments/Delete/@comm.CommentId">
+                                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                    <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        <p>@comm.Content</p>
+                    </div>
                 </div>
-            }
-            <br />
+            </div>
+            
             <br />
         </div>
         <div class="col-md-4"></div>

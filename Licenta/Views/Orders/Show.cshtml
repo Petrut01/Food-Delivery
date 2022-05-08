@@ -2,10 +2,14 @@
 
 <div class="text-center">
     <h2>
-        Comanda #@Model.OrderId plasata la @Model.OrderDate este @ViewBag.Status.
+        Comanda #@Model.OrderId plasata la @Model.OrderDate este @ViewBag.Status.<br />
+
     </h2>
-    
-    <br/>
+    @if (ViewBag.Status == "finalizata" && ViewBag.esteAdmin)
+    {
+        <h2> Livrator: @ViewBag.DriverEmail</h2>
+    }
+    <br />
 </div>
 
 

@@ -22,7 +22,7 @@ namespace Licenta.Controllers
                            where orderdetail.ShoppingCartId == cart.ShoppingCartId
                            select orderdetail;
 
-            IEnumerable<Order> myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList();
+            var myOrders = db.Orders.Where(order => orderDetails.Intersect(order.OrderDetails).Count() > 0).ToList();
             myOrders.Reverse();
             if (TempData.ContainsKey("message"))
             {
@@ -117,7 +117,10 @@ namespace Licenta.Controllers
             if (delivery.IsFinished == true)
             {
                 ViewBag.Status = "finalizata";
-            }else
+                ViewBag.DriverEmail = db.Users.Where(user => user.Id == delivery.DriverId).Select(user => user.Email).First();
+                ViewBag.esteAdmin = User.IsInRole("Admin");
+            }
+            else
             {
                 ViewBag.Status = "in desfasurare";
             }
