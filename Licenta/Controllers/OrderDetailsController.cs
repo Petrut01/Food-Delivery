@@ -13,15 +13,11 @@ namespace Licenta.Controllers
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: OderDetails
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
 
         //de setat in view productid, pretul, cantitate 1 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult New(OrderDetail orderDetail)
         {
             var userCurent = User.Identity.GetUserId();
@@ -50,7 +46,7 @@ namespace Licenta.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult EditPlus(int id)
         {
             OrderDetail orderDetail = db.OrderDetails.Find(id);
@@ -61,7 +57,7 @@ namespace Licenta.Controllers
 
 
         [HttpPut]
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult EditMinus(int id)
         {
             OrderDetail orderDetail = db.OrderDetails.Find(id);
@@ -80,7 +76,7 @@ namespace Licenta.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult Delete(int id)
         {
             OrderDetail orderDetail = db.OrderDetails.Find(id);

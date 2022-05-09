@@ -28,7 +28,7 @@ namespace Licenta.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} trebuie sa aiba minim {2} caractere lungime.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Noua parola")]
         public string NewPassword { get; set; }
@@ -47,7 +47,7 @@ namespace Licenta.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} trebuie sa aiba minim {2} caractere lungime.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Parola noua")]
         public string NewPassword { get; set; }
@@ -56,6 +56,26 @@ namespace Licenta.Models
         [Display(Name = "Confirma noua parola")]
         [Compare("NewPassword", ErrorMessage = "Parola introdusa pentru confirmare difera de parola noua.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class EditInfoViewModel
+    {
+        [Required]
+        [Display(Name = "Prenume")]
+        public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Nume")]
+        public string LastName { get; set; }
+        [Required]
+        [Display(Name = "Numar de telefon")]
+        public string PhoneNumber { get; set; }
+        [Required]
+        [Display(Name = "Adresa")]
+        public string Address { get; set; }
+        [Required]
+        [Display(Name = "Oras")]
+        public string City { get; set; }
+
     }
 
     public class AddPhoneNumberViewModel

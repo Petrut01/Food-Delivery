@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Licenta.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Licenta.Controllers
 {
@@ -15,6 +16,8 @@ namespace Licenta.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
+
 
         public ManageController()
         {
@@ -72,6 +75,12 @@ namespace Licenta.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+            var store = new UserStore<ApplicationUser>(db);
+            var manager = new UserManager<ApplicationUser>(store);
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
+
+            ViewBag.UserCurent = currentUser;
+
             return View(model);
         }
 
@@ -220,6 +229,7 @@ namespace Licenta.Controllers
             return View();
         }
 
+
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
@@ -242,6 +252,46 @@ namespace Licenta.Controllers
             }
             AddErrors(result);
             return View(model);
+        }
+
+        public ActionResult EditInfo()
+        {
+            var store = new UserStore<ApplicationUser>(db);
+            var manager = new UserManager<ApplicationUser>(store);
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            EditInfoViewModel userInfo = new EditInfoViewModel();
+            userInfo.FirstName = currentUser.FirstName;
+            userInfo.LastName = currentUser.LastName;
+            userInfo.PhoneNumber = currentUser.PhoneNumber;
+            userInfo.Address = currentUser.Address;
+            userInfo.City = currentUser.City;
+            return View(userInfo);
+            
+        }
+
+
+        //
+        // POST: /Manage/EditInfo
+        [HttpPost]
+        public async Task<ActionResult> EditInfo(EditInfoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var store = new UserStore<ApplicationUser>(db);
+            var manager = new UserManager<ApplicationUser>(store);
+            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
+            currentUser.FirstName = model.FirstName;
+            currentUser.LastName = model.LastName;
+            currentUser.PhoneNumber = model.PhoneNumber;
+            currentUser.Address = model.Address;
+            currentUser.City = model.City;
+            await manager.UpdateAsync(currentUser);
+            store.Context.SaveChanges();
+
+
+            return RedirectToAction("Index");
         }
 
         //

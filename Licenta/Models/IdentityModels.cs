@@ -13,6 +13,15 @@ namespace Licenta.Models
     public class ApplicationUser : IdentityUser
     {
         public IEnumerable<SelectListItem> AllRoles { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public string Address { get; set; }
+        public string City { get; set; }
+
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

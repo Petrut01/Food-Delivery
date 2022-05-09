@@ -1,5 +1,6 @@
 ﻿using Licenta.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Licenta.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-       [Authorize(Roles = "User,Admin")]
+       [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult Index()
         {
             var userCurent = User.Identity.GetUserId();
@@ -39,7 +40,7 @@ namespace Licenta.Controllers
             return View();
         }
 
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult New()
         {
             Order order = new Order();
@@ -56,11 +57,19 @@ namespace Licenta.Controllers
             }
             ViewBag.Total = total;
 
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var user = UserManager.FindById(userCurent);
+            ViewBag.FirstName = user.FirstName;
+            ViewBag.LastName = user.LastName;
+            ViewBag.PhoneNumber = user.PhoneNumber;
+            ViewBag.Address = user.Address;
+            ViewBag.City = user.City;
+
             return View(order);
         }
 
         [HttpPost]
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult New(Order order)
         {
 
@@ -107,7 +116,7 @@ namespace Licenta.Controllers
             }
         }
 
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult Show(int id)
         {
             Order order = db.Orders.Find(id);
@@ -130,7 +139,7 @@ namespace Licenta.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Driver,Admin")]
         public ActionResult Delete(int id)
         {
             Order order = db.Orders.Find(id);

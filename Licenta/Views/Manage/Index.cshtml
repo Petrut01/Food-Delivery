@@ -7,35 +7,35 @@
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <div class="row">
-            <div class="text-center">
-                <h2>@ViewBag.Title</h2>
+        <div class="text-center">
+                <h1>@ViewBag.Title</h1>
                 <br/>
                 <img class="img-responsive" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="height:200px; margin:auto;" alt="poza_utilizator" />
                 <br/>
-            </div>
-            <div class="col-md-5">
-                <h3> Parola:</h3>
-                <h3> Istoric Comenzi:</h3>
-            </div>
-            <div class="col-md-7">
+                <h3>
+                    @ViewBag.UserCurent.FirstName @ViewBag.UserCurent.LastName
+                </h3>
+            
+                <h4>
+                    <a href="/Manage/EditInfo">Actualizeaza informatiile personale</a>
+                </h4>
+            
                 @if (Model.HasPassword)
                 {
                     
-                    <h3>
+                    <h4>
                         <a href="/Manage/ChangePassword">Schimba parola</a>
-                    </h3>
+                    </h4>
                 }
                 else
                 {
                     @Html.ActionLink("Creare parola", "SetPassword")
                 }
                 
-                <h3>
+                <h4>
                     <a href="/Orders/Index">Vezi istoricul comenzilor tale</a>
-                </h3>
-                
-            </div>
+                </h4>
+            
         </div>
     </div>
     <div class="col-md-3"></div>

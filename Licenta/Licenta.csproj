@@ -281,6 +281,7 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Show.cshtml" />
     <Content Include="Views\Users\AllOrders.cshtml" />
+    <Content Include="Views\Manage\EditInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

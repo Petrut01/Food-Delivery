@@ -64,6 +64,22 @@ namespace Licenta.Models
 
     public class RegisterViewModel
     {
+        [Required, Display(Name ="Prenume")]
+        public string FirstName { get; set; }
+
+        [Required, Display(Name = "Nume")]
+        public string LastName { get; set; }
+
+        [Required, Display(Name = "Numar de telefon")]
+        [RegularExpression(@"^(\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?(\s|\.|\-)?([0-9]{3}(\s|\.|\-|)){2}$", ErrorMessage = "Formatul numarului de telefon este invalid")]
+        public string PhoneNumber { get; set; }
+
+        [Required, Display(Name = "Adresa")]
+        public string Address { get; set; }
+
+        [Required, Display(Name = "Oras")]
+        public string City { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -89,7 +105,7 @@ namespace Licenta.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} trebuie sa aiba minim {2} caractere lungime.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Parola")]
         public string Password { get; set; }

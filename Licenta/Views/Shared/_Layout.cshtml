@@ -48,14 +48,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (!User.IsInRole("Driver"))
-                    { <li>
+                    
+                      <li>
                             <a href="/Orders/New">
                                 <i class="glyphicon glyphicon-shopping-cart"></i>
 
                             </a>
                       </li>
-                    }
+                    
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-center">
