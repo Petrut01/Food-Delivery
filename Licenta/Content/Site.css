@@ -153,3 +153,9 @@ textarea {
 .panel-heading h1{
     font-family: 'Sofia', cursive;
 }
+
+.required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 2px;
+}

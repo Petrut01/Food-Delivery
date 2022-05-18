@@ -167,6 +167,7 @@ namespace Licenta.Controllers
                     db.OrderDetails.Remove(detail);
                 }
                 db.Orders.Remove(order);
+                db.Deliveries.Remove(deliveryForOrder);
                 db.SaveChanges();
                 TempData["message"] = "Comanda a fost anulata!";
                 

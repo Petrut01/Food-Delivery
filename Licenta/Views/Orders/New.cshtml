@@ -11,35 +11,35 @@
         <div class="col-md-6">
             @using (Html.BeginForm(actionName: "New", controllerName: "Orders"))
             {
-                @Html.Label("FirstName", "Prenume")
+                @Html.Label("FirstName", "Prenume", new { @class = "required-field"})
                 <br />
                 @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "text-danger" })
                 @Html.TextBox("FirstName", null, new { @class = "form-control" })
 
                 <br />
 
-                @Html.Label("LastName", "Nume")
+                @Html.Label("LastName", "Nume", new { @class = "required-field" })
                 <br />
                 @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger" })
                 @Html.TextBoxFor(m => m.LastName, new { @Value = ViewBag.LastName, @class = "form-control" })
 
                 <br />
 
-                @Html.Label("PhoneNumber", "Numar de telefon")
+                @Html.Label("PhoneNumber", "Numar de telefon", new { @class = "required-field" })
                 <br />
                 @Html.ValidationMessageFor(m => m.PhoneNumber, null, new { @class = "text-danger" })
                 @Html.TextBox("PhoneNumber", null, new { @class = "form-control" })
 
                 <br />
 
-                @Html.Label("Address", "Adresa")
+                @Html.Label("Address", "Adresa", new { @class = "required-field" })
                 <br />
                 @Html.ValidationMessageFor(m => m.Address, null, new { @class = "text-danger" })
                 @Html.TextBox("Address", null, new { @class = "form-control" })
 
                 <br />
 
-                @Html.Label("City", "Oras")
+                @Html.Label("City", "Oras", new { @class = "required-field" })
                 <br />
                 @Html.ValidationMessageFor(m => m.City, null, new { @class = "text-danger" })
                 @Html.TextBox("City", null, new { @class = "form-control" })

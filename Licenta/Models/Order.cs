@@ -34,7 +34,6 @@ namespace Licenta.Models
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        
 
     }
 }

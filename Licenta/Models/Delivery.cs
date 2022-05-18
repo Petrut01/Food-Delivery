@@ -19,7 +19,7 @@ namespace Licenta.Models
         public bool IsFinished { get; set; }
 
         public virtual Order Order { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        
 
 
     }

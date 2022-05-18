@@ -15,11 +15,13 @@
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
                         <h2>@ViewBag.Title</h2>
+                        <br />
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            <br />
-            @Html.ValidationSummary("", new { @class = "text-danger" })
+            
+            
 
             <div class="form-group">
                 @Html.LabelFor(m => m.FirstName, new { @class = "col-md-4 control-label" })

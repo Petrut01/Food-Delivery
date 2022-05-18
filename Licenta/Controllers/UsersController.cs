@@ -95,7 +95,9 @@ namespace Licenta.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AllOrders()
         {
-            ViewBag.Deliveries = db.Deliveries.ToList();
+            var deliveries = db.Deliveries.ToList();
+            deliveries.Reverse();
+            ViewBag.Deliveries = deliveries;
             return View();
         }
 

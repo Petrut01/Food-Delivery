@@ -1,7 +1,7 @@
 ﻿@model Licenta.Models.ApplicationUser
 
 <ol class="breadcrumb">
-    <li><h3>@ViewBag.Title</h3></li>
+    <li><h3>Editare user @Model.Email</h3></li>
 </ol>
 
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Users", routeValues: new { id = Model.Id }))

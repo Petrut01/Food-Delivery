@@ -31,7 +31,6 @@ namespace Licenta.Models
 
         public IEnumerable<SelectListItem> Categ { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
