@@ -21,7 +21,7 @@ namespace Licenta.Controllers
         }
 
         [Authorize(Roles = "Driver,Admin")]
-        public ActionResult MyOrders()
+        public ActionResult MyDeliveries()
         {
             var userCurent = User.Identity.GetUserId();
             ViewBag.MyOrders = db.Deliveries.Where(d => d.DriverId == userCurent).ToList();
@@ -49,7 +49,7 @@ namespace Licenta.Controllers
             Delivery delivery = db.Deliveries.Find(id);
             delivery.IsFinished = true;
             db.SaveChanges();
-            return RedirectToAction("MyOrders");
+            return RedirectToAction("MyDeliveries");
         }
     }
 }

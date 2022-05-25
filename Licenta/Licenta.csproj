@@ -275,7 +275,7 @@
     <Content Include="Views\Products\Show.cshtml" />
     <Content Include="Views\Products\New.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
-    <Content Include="Views\Deliveries\MyOrders.cshtml" />
+    <Content Include="Views\Deliveries\MyDeliveries.cshtml" />
     <Content Include="Views\Deliveries\AvailableOrders.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />

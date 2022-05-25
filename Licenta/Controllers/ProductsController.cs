@@ -18,7 +18,7 @@ namespace Licenta.Controllers
         // GET: Products
         public ActionResult Index(int id)
         {
-            var products = db.Products.Include("Category").Include("User").Where(prod => prod.CategoryId == id);
+            var products = db.Products.Include("Category").Where(prod => prod.CategoryId == id);
        
             var produse = products.ToList();
 
@@ -32,7 +32,7 @@ namespace Licenta.Controllers
                 List<int> commentIds = db.Comments.Where(comm => comm.Content.Contains(search)).Select(comm => comm.ProductId).ToList();
                 List<int> mergedIds = productIds.Union(commentIds).ToList();
 
-                products = (DbQuery<Product>)db.Products.Where(product => mergedIds.Contains(product.ProductId)).Include("Category").Include("User");
+                products = (DbQuery<Product>)db.Products.Where(product => mergedIds.Contains(product.ProductId)).Include("Category");
                 produse = products.ToList();
             } else if (ViewBag.SearchString != null)
             {
@@ -42,7 +42,7 @@ namespace Licenta.Controllers
                 List<int> commentIds = db.Comments.Where(comm => comm.Content.Contains(search)).Select(comm => comm.ProductId).ToList();
                 List<int> mergedIds = productIds.Union(commentIds).ToList();
 
-                products = (DbQuery<Product>)db.Products.Where(product => mergedIds.Contains(product.ProductId)).Include("Category").Include("User");
+                products = (DbQuery<Product>)db.Products.Where(product => mergedIds.Contains(product.ProductId)).Include("Category");
                 produse = products.ToList();
             }
 

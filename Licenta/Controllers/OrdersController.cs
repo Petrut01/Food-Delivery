@@ -56,6 +56,7 @@ namespace Licenta.Controllers
                 total += item.UnitPrice * item.Quantity;
             }
             ViewBag.Total = total;
+            
 
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var user = UserManager.FindById(userCurent);

@@ -30,7 +30,7 @@
                             @if (User.IsInRole("Driver"))
                             {
                                 <li>@Html.ActionLink("Preia o comanda", "AvailableOrders", "Deliveries")</li>
-                                <li>@Html.ActionLink("Livrarile mele", "MyOrders", "Deliveries")</li>
+                                <li>@Html.ActionLink("Livrarile mele", "MyDeliveries", "Deliveries")</li>
                             }
                             @if (User.IsInRole("Admin"))
                             {
