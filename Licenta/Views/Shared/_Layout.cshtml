@@ -17,8 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!--@Html.ActionLink("CFP Restaurant", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
-
+               
                 @if (User.IsInRole("Driver") || User.IsInRole("Admin"))
                 {
                     <div class="dropdown">

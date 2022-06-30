@@ -77,7 +77,7 @@ namespace Licenta.Controllers
             };
             var store = new UserStore<ApplicationUser>(db);
             var manager = new UserManager<ApplicationUser>(store);
-            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
+            var currentUser = await manager.FindByIdAsync(userId);
 
             ViewBag.UserCurent = currentUser;
 

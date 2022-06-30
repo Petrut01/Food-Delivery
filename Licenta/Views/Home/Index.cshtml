@@ -77,21 +77,23 @@
   
     </div>
     <div class="panel panel-body">
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
-            @foreach (Licenta.Models.Product product in ViewBag.Top3Products)
-            {
+        <div class="row">
+            
+                @foreach (Licenta.Models.Product product in ViewBag.Top3Products)
+                {
+            <div class="col-sm-6 col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <a href="/Products/Show/@product.ProductId">
                             <img class="img-responsive" src="@product.Photo" alt="poza produsului" style="height:200px; margin:auto;" />
                         </a>
                         <a href="/Products/Show/@product.ProductId" style="text-decoration: none">
-                            <h3 class="text-center text-primary" >@product.ProductName</h3>
+                            <h3 class="text-center text-primary">@product.ProductName</h3>
                         </a>
                     </div>
                     <div class="panel-footer" style="display:block">
                         <h4 class="pull-left">
-                             @product.Price lei
+                            @product.Price lei
                         </h4>
                         <div class="pull-right">
                             <form method="post" action="/OrderDetails/New">
@@ -106,7 +108,9 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>
-            }
+            </div>
+                }
+            
         </div>
     </div>
 </div>

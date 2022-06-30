@@ -48,12 +48,12 @@ namespace Licenta.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Introduceti adresa dumneavoastra de email")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Introduceti parola")]
         [DataType(DataType.Password)]
         [Display(Name = "Parola")]
         public string Password { get; set; }
@@ -80,12 +80,13 @@ namespace Licenta.Models
         [Display(Name = "Oras")]
         public string City { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Emailul este obligatoriu")]
         [EmailAddress]
+        [System.Web.Mvc.Remote("IsEmailAvailable", "Users", ErrorMessage = "Adresa de email introdusa este deja folosita")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Parola este obligatorie")]
         [StringLength(100, ErrorMessage = "{0} trebuie sa aiba cel putin {2} caractere lungime.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Parola")]

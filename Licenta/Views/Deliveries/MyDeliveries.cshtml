@@ -1,6 +1,6 @@
 ﻿@model Licenta.Models.Delivery
 
-@if (ViewBag.MyOrders != null)
+@if ((ViewBag.MyOrders as IList<Licenta.Models.Delivery>).Count() > 0)
 {
     <br/>
     <div class="row">

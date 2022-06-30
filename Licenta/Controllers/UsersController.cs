@@ -178,5 +178,11 @@ namespace Licenta.Controllers
             UserManager.Delete(user);
             return RedirectToAction("Index");
         }
+
+        public JsonResult IsEmailAvailable(string Email)
+        {
+            return Json(!db.Users.Any(u => u.Email == Email), JsonRequestBehavior.AllowGet);
+        }
     }
+
 }

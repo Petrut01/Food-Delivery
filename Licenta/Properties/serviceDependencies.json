@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "DbAzure"
+    },
+    "identityapp1": {
+      "type": "identityapp"
+    }
+  }
+}

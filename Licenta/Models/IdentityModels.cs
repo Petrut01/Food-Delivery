@@ -33,11 +33,18 @@ namespace Licenta.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+        /*public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
             Licenta.Migrations.Configuration>("DefaultConnection"));
+        }*/
+
+        public ApplicationDbContext()
+            : base("DbAzure", throwIfV1Schema: false)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
+            Licenta.Migrations.Configuration>("DbAzure"));
         }
 
         public DbSet<Product> Products { get; set; }

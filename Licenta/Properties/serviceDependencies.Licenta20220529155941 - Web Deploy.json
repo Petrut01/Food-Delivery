@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/licentadbserver/databases/DbAzure",
+      "type": "mssql.azure",
+      "connectionId": "DbAzure"
+    },
+    "identityapp1": {
+      "type": "identityapp.aad"
+    }
+  }
+}

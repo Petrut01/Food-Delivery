@@ -1,6 +1,6 @@
 ﻿@model Licenta.Models.Product
 
-<h2 class="text-primary">Editare produs cu id @Model.ProductId : @Model.ProductName</h2>
+<h2 class="text-primary">Modifica produsul cu id-ul @Model.ProductId : @Model.ProductName</h2>
 
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Products", routeValues: new { id = Model.ProductId }))
 {
